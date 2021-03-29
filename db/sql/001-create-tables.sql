@@ -14,11 +14,11 @@ CREATE TABLE IF NOT EXISTS chatDB.messages(
   `sendUserId` int(11) NOT NULL,
   `receiveUserId` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
-  `time` datetime NOT NULL
+  `time` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS chatDB.friends(
   `id` int(11) NOT NULL AUTO_INCREMENT UNIQUE,
-  `userId` int(11) NOT NULL,
-  `friendId` int(11) NOT NULL
+  `sendFriendId` int(11) NOT NULL,
+  `receiveFriendId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
