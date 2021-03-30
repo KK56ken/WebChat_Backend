@@ -11,18 +11,23 @@ import(
 
 func Register(w http.ResponseWriter, r *http.Request) {
 
+    var user model.User
+
     body := r.Body
     defer body.Close()
 
-    fmt.Printlen(r.Body)
+    json.NewDecoder(r.Body).Decode(&user)
 
-    var users []model.User
-    if err := json.Unmarshal(body, &users); err != nil{
-        log.Fatal(err)
-    }
-    for _, p := range persons{
-        fmt.Printf("%d : %s\n",p.Email, p.Name, p.Password)
-    }
+    fmt.Printlen(r.Body)
+    fmt.Printlen(user)
+
+    model.UserCreate(user)
 
     fmt.Fprintf(w, "OK")
 }
+
+// {
+//    "email":"test@example.com"
+//    "user":"ken"
+//    "password":"password123"
+// }
