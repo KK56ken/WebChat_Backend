@@ -24,8 +24,6 @@ func UserCreate(user User){
 	}
 	defer db.Close()
 
-	fmt.Println("test")
-
 	ins, err := db.Prepare("INSERT INTO users(email, name, password, token) VALUES(?,?,?,?)")
 	if err != nil{
 		log.Fatal(err)
@@ -39,7 +37,6 @@ func UserCreate(user User){
 func TokenCreate(user User)(string, error){
 	var err error
 
-	
 	secret := "secret"
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -58,5 +55,23 @@ func TokenCreate(user User)(string, error){
 		log.Fatal(err)
 	}
 	return tokenString, nil
+}
 
+func UserLogin(user User)(User){
+	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	rows,err := db.Query("SELECT userid, name, token  FROM users WHERE Email = ? AND Password = ?",user.Email, user.Password)
+
+	defer rows.Close()
+
+	for rows.Next(){
+		if err := rows.Scan(&user.UserId,&user.Name,&user.Token); err != nil{
+			log.Fatal(err)
+		}
+	}
+	return user
 }
