@@ -5,6 +5,7 @@ import(
 	"log"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type User struct {
@@ -16,10 +17,14 @@ type User struct {
 	AvatorURL string `json:"avatorurl"`
 }
 
-
 func UserCreate(user User){
-	db,_ := sql.Open("mysql","root:root@tcp(127.0.0.1:3306)/chatDB")
+	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
+	if err != nil{
+		log.Fatal(err)
+	}
 	defer db.Close()
+
+	fmt.Println("test")
 
 	ins, err := db.Prepare("INSERT INTO users(email, name, password, token) VALUES(?,?,?,?)")
 	if err != nil{
@@ -34,6 +39,7 @@ func UserCreate(user User){
 func TokenCreate(user User)(string, error){
 	var err error
 
+	
 	secret := "secret"
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{

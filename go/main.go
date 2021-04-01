@@ -7,7 +7,7 @@ import(
 )
 
 func main() {
-    http.HandleFunc("/api/register", controller.).Methods("POST")
+    http.HandleFunc("/api/register", controller.Register)
     http.HandleFunc("/api/user", controller.Handler)
     http.HandleFunc("/api/chat", controller.Chat)
     http.HandleFunc("/api/test", testhandler)

@@ -5,25 +5,45 @@ import(
     "net/http"
     "webchat/model"
     "encoding/json"
-    "log"
-    // "io/ioutil"
+    "io/ioutil"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
 
-    var user model.User
+    w.Header().Set("Access-Control-Allow-Headers", "*")
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set( "Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS" )
 
-    body := r.Body
-    defer body.Close()
+    if r.Method == http.MethodPost{
 
-    json.NewDecoder(r.Body).Decode(&user)
+        fmt.Println("POST通ったよ")
 
-    fmt.Printlen(r.Body)
-    fmt.Printlen(user)
+        user := model.User{}
 
-    model.UserCreate(user)
+        requestBytes, err := ioutil.ReadAll(r.Body)
 
-    fmt.Fprintf(w, "OK")
+        fmt.Println(requestBytes)
+        if err != nil {
+            w.WriteHeader(http.StatusServiceUnavailable)
+            fmt.Println("io error")
+            return
+        }
+
+        fmt.Println("unmarshal前")
+        fmt.Println(string(requestBytes))
+
+        if err := json.Unmarshal(requestBytes, &user); err != nil {
+            w.WriteHeader(http.StatusServiceUnavailable)
+            fmt.Println("JSON Unmarshal error:", err)
+            return
+        }
+        fmt.Printf("%+v",&user)
+        fmt.Println("unmarshal後")
+
+        model.UserCreate(user)
+
+        fmt.Fprintf(w, "OK")
+    }
 }
 
 // {

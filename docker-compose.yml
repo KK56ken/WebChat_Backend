@@ -10,6 +10,8 @@ services:
       - "9000:9000"
     volumes:
       - ./go:/go/src/app
+    depends_on:
+      - db
   # MySQL
   db:
     image: mysql:5.7
