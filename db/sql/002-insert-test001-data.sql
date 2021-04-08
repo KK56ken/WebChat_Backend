@@ -8,3 +8,4 @@ INSERT INTO messages (sendUserId, receiveUserId, message, time) VALUES (2, 1, 'h
 
 INSERT INTO friends (sendFriendId, receiveFriendId) VALUES (1, 2);
 INSERT INTO friends (sendFriendId, receiveFriendId) VALUES (1, 3);
+INSERT INTO friends (sendFriendId, receiveFriendId) VALUES (2, 1);

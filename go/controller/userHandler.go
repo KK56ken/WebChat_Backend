@@ -66,7 +66,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 
         id := strconv.Itoa(user.UserId)
 
-        resultJson := `{"id":"`+ id + `","name:"` + user.Name + `","token:"` + user.Token + `"}`
+        resultJson := `{"id":"`+ id + `","name":"` + user.Name + `","token":"` + user.Token + `"}`
 
         w.WriteHeader(http.StatusOK)
         r.Header.Set("Content-Type", "application/json")
