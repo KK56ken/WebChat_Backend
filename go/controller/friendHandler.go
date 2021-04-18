@@ -3,10 +3,18 @@ package controller
 import(
     "net/http"
     "webchat/model"
-    // "encoding/json"
-    // "io/ioutil"
+		"fmt"
     "strconv"
+		// "strings"
 )
+
+// func (is friendsInt) toString() []string {
+//   f := make([]string, len(is))
+//   for i, v := range is {
+//     f[i] = string(v)
+//   }
+//   return f
+// }
 
 func Friend(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Access-Control-Allow-Headers", "*")
@@ -16,14 +24,19 @@ func Friend(w http.ResponseWriter, r *http.Request){
 		v := r.URL.Query()
 
 		var id int
-		friend := model.Friend{}
+
+		var ids string
+		var names string
 
 		for _, vs := range v{
 			id, _ = strconv.Atoi(vs[0])
 		}
-		friend = model.GetFriends(id)
+		ids,names = model.GetFriends(id)
 
-		
+		// fmt.Println(friends)
+		friendsJson := `{"ids":"` + ids + `","names":"` + names + `"}`
+
+		fmt.Fprintf(w, friendsJson)
 	}
 
 }

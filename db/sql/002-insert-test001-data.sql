@@ -4,7 +4,7 @@ INSERT INTO users (email, name, password, token, avatorurl) VALUES ('test3@test3
 
 
 INSERT INTO messages (sendUserId, receiveUserId, message, time) VALUES (1, 2, 'おはよう',CURRENT_TIMESTAMP);
-INSERT INTO messages (sendUserId, receiveUserId, message, time) VALUES (2, 1, 'hello',CURRENT_TIMESTAMP);
+INSERT INTO messages (sendUserId, receiveUserId, message, time) VALUES (1, 3, 'hello',CURRENT_TIMESTAMP);
 
 INSERT INTO friends (sendFriendId, receiveFriendId) VALUES (1, 2);
 INSERT INTO friends (sendFriendId, receiveFriendId) VALUES (1, 3);
