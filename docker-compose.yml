@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
   # Golang
   app:
-    build: .
+    build: ./go
     container_name: go
     tty: true
     ports:
@@ -14,19 +14,18 @@ services:
       - db
   # MySQL
   db:
-    image: mysql:5.7
+    build: ./db
     container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: chatDB
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
       LANG: "ja_JP.UTF-8"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-    - ./db/data:/var/lib/mysql
-    - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-    - ./db/sql:/docker-entrypoint-initdb.d
+      - ./db/data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
     ports:
-    - 3306:3306
+      - 3306:3306

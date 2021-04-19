@@ -1,0 +1,7 @@
+# 2020/10/14最新versionを取得
+FROM mysql
+
+ADD ./my.cnf /etc/mysql/conf.d/my.cnf
+RUN chmod 644 /etc/mysql/conf.d/my.cnf
+
+CMD ["mysql"]
