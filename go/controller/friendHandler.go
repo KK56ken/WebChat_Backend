@@ -8,14 +8,6 @@ import(
 		// "strings"
 )
 
-// func (is friendsInt) toString() []string {
-//   f := make([]string, len(is))
-//   for i, v := range is {
-//     f[i] = string(v)
-//   }
-//   return f
-// }
-
 func Friend(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -24,17 +16,12 @@ func Friend(w http.ResponseWriter, r *http.Request){
 		v := r.URL.Query()
 
 		var id int
-
-		var ids string
-		var names string
+		var friendsJson string
 
 		for _, vs := range v{
 			id, _ = strconv.Atoi(vs[0])
 		}
-		ids,names = model.GetFriends(id)
-
-		// fmt.Println(friends)
-		friendsJson := `{"ids":"` + ids + `","names":"` + names + `"}`
+		friendsJson = model.GetFriends(id)
 
 		fmt.Fprintf(w, friendsJson)
 	}
