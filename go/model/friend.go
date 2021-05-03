@@ -51,3 +51,24 @@ func GetFriends(id int)([]string){
 	}
 	return json
 }
+func GetFriendsId(id int)([]string){
+	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	rows,err := db.Query("SELECT receiveFriendId FROM friends WHERE sendFriendId = ?",id)
+	defer rows.Close()
+
+	var ids []string
+
+	for rows.Next(){
+		var friendId string
+		if err := rows.Scan(&friendId); err != nil{
+			log.Fatal(err)
+		}
+		ids = append(ids, friendId)
+	}
+	return ids
+}
