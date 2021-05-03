@@ -7,6 +7,7 @@ import(
     "encoding/json"
     "io/ioutil"
     "strconv"
+    "reflect"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +68,7 @@ func Login(w http.ResponseWriter, r *http.Request){
         id := strconv.Itoa(user.UserId)
 
         resultJson := `{"id":"`+ id + `","name":"` + user.Name + `","token":"` + user.Token + `"}`
+        fmt.Println("userlogin" , reflect.TypeOf(resultJson))
 
         w.WriteHeader(http.StatusOK)
         r.Header.Set("Content-Type", "application/json")

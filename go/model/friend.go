@@ -5,16 +5,16 @@ import(
 	"log"
 	"fmt"
 	"strconv"
-	// "reflect"
+	"reflect"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// type Friend struct {
-// 	FriendId int `json:"id"`
-// 	Name string `json:"name"`
-// 	AvatorURL string `json:"icon"`
-// }
-func GetFriends(id int)(string){
+type Friend struct {
+	FriendId int `json:"id"`
+	Name string `json:"name"`
+	AvatorURL string `json:"icon"`
+}
+func GetFriends(id int)([]string){
 	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
 	if err != nil{
 		log.Fatal(err)
@@ -25,35 +25,29 @@ func GetFriends(id int)(string){
 	defer rows.Close()
 	fmt.Println(rows)
 
-	var strid string
-	var json string
+	var json []string
 
 	for rows.Next(){
+		friend := new(Friend)
 
-		receiveId := 0
-
-		if err := rows.Scan(&receiveId); err != nil{
+		if err := rows.Scan(&friend.FriendId); err != nil{
 			log.Fatal(err)
 		}
-		strid = strconv.Itoa(receiveId)
+		strid := strconv.Itoa(friend.FriendId)
 
-		rows2,err := db.Query("SELECT name FROM users WHERE userid = ?",receiveId)
+		rows2,err := db.Query("SELECT name FROM users WHERE userid = ?", friend.FriendId)
 		defer rows2.Close()
 		if err != nil{
 			log.Fatal(err)
 		}
 		for rows2.Next(){
-			var name string
-			if err := rows2.Scan(&name); err != nil{
+			if err := rows2.Scan(&friend.Name); err != nil{
 				log.Fatal(err)
 			}
-			json += `"{"id":"` + strid + `","name":"` + name + `"},"`
-
+			json = append(json,`{"id":"`+ strid + `","name":"` + friend.Name + `"}`)
 		}
 		fmt.Println(json)
-
-		// fmt.Println(reflect.TypeOf(strid))
-
+		fmt.Println(reflect.TypeOf(json))
 	}
 	return json
 }
