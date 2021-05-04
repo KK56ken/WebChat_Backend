@@ -75,3 +75,46 @@ func UserLogin(user User)(User){
 	}
 	return user
 }
+
+func GetFriendName(id int) string{
+	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	sql := "SELECT name FROM users WHERE userid = ?"
+
+	rows,err := db.Query(sql, id)
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	fmt.Println(rows)
+	var friendName string
+	for rows.Next(){
+		if err := rows.Scan(&friendName); err != nil{
+			log.Fatal(err)
+		}
+		fmt.Println(friendName)
+	}
+	return friendName
+}
+func UserAutoLogin(user User)(User){
+	db,err := sql.Open("mysql","root:root@tcp(mysql_host:3306)/chatDB")
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	sql := "SELECT email, name,  FROM users WHERE token = ?"
+	rows,err := db.Query(sql, user.Token)
+	defer rows.Close()
+
+	for rows.Next(){
+		if err := rows.Scan(&user.Email, &user.Name); err != nil{
+			log.Fatal(err)
+		}
+	}
+	return user
+}

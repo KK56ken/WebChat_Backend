@@ -5,10 +5,9 @@ import(
     "net/http"
     "webchat/model"
     "strconv"
-    // "encoding/json"
-    // "log"
+    "encoding/json"
+    "log"
 )
-
 func Chat(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
     w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -26,23 +25,24 @@ func Chat(w http.ResponseWriter, r *http.Request) {
 
         //データベースでidと一致している
         ids := model.GetFriendsId(id)
+        fmt.Println(ids)
 
         messages := model.GetChat(id, ids)
 
-        // jsonBytes, err := json.Marshal(messages)
+        jsonBytes, err := json.Marshal(messages)
 
-		// if err != nil {
-		// 	w.WriteHeader(http.StatusServiceUnavailable)
-		// 	log.Fatal(err)
-		// 	return
-		// }
+		if err != nil {
+			w.WriteHeader(http.StatusServiceUnavailable)
+			log.Fatal(err)
+			return
+		}
 
-		// jsonString := string(jsonBytes)
+		jsonString := string(jsonBytes)
 
 		w.WriteHeader(http.StatusOK)
         r.Header.Set("Content-Type", "application/json")
 
-        fmt.Fprintf(w, messages)
+        fmt.Fprintf(w, jsonString)
     }else if r.Method == http.MethodPost{
 
         // user := model.User{}
