@@ -107,12 +107,12 @@ func UserAutoLogin(user User)(User){
 	}
 	defer db.Close()
 
-	sql := "SELECT email, name,  FROM users WHERE token = ?"
+	sql := "SELECT userid, email, name FROM users WHERE token = ?"
 	rows,err := db.Query(sql, user.Token)
 	defer rows.Close()
 
 	for rows.Next(){
-		if err := rows.Scan(&user.Email, &user.Name); err != nil{
+		if err := rows.Scan(&user.UserId, &user.Email, &user.Name); err != nil{
 			log.Fatal(err)
 		}
 	}
