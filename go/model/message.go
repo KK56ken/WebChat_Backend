@@ -59,11 +59,8 @@ func PostMessage(message Message){
 		log.Fatal(err)
 	}
 	defer db.Close()
-	// sendUserId, receiveUserId, message
-	ins, err := db.Prepare("INSERT INTO messags(sendUserId, receiveUserId, message) VALUES(?,?,?)")
+	_, err = db.Exec("INSERT INTO messages(sendUserId, receiveUserId, message, time) VALUES(?,?,?,CURRENT_TIMESTAMP)",message.SendUserId, message.ReceiveUserId, message.Message)
 	if err != nil{
 		log.Fatal(err)
 	}
-
-	ins.Exec(message.SendUserId, message.ReceiveUserId, message.Message)
 }

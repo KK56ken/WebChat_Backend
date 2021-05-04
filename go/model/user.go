@@ -24,15 +24,15 @@ func UserCreate(user User){
 	}
 	defer db.Close()
 
-	ins, err := db.Prepare("INSERT INTO users(email, name, password, token) VALUES(?,?,?,?)")
-	if err != nil{
-		log.Fatal(err)
-	}
 	token, err := TokenCreate(user)
 
 	user.Token = token
 
-	ins.Exec(user.Email, user.Name, user.Password, user.Token)
+	_, err = db.Exec("INSERT INTO users(email, name, password, token) VALUES(?,?,?,?)",user.Email, user.Name, user.Password, user.Token)
+	if err != nil{
+		log.Fatal(err)
+	}
+
 }
 func TokenCreate(user User)(string, error){
 	var err error

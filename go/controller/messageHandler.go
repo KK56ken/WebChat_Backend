@@ -63,6 +63,7 @@ func Message(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("JSON Unmarshal error:", err)
 				return
 		}
+		fmt.Println(message)
 
 		model.PostMessage(message)
 
