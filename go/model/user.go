@@ -90,13 +90,13 @@ func GetFriendName(id int) string{
 		log.Fatal(err)
 	}
 	defer rows.Close()
-	fmt.Println(rows)
+	// fmt.Println(rows)
 	var friendName string
 	for rows.Next(){
 		if err := rows.Scan(&friendName); err != nil{
 			log.Fatal(err)
 		}
-		fmt.Println(friendName)
+		// fmt.Println(friendName)
 	}
 	return friendName
 }

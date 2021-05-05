@@ -3,9 +3,9 @@ package model
 import(
 	"database/sql"
 	"log"
-	"fmt"
+	// "fmt"
 	"strconv"
-	"reflect"
+	// "reflect"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -23,7 +23,7 @@ func GetFriends(id int)([]string){
 
 	rows,err := db.Query("SELECT receiveFriendId FROM friends WHERE sendFriendId = ?",id)
 	defer rows.Close()
-	fmt.Println(rows)
+	// fmt.Println(rows)
 
 	var json []string
 
@@ -46,8 +46,8 @@ func GetFriends(id int)([]string){
 			}
 			json = append(json,`{"id":"`+ strid + `","name":"` + friend.Name + `"}`)
 		}
-		fmt.Println(json)
-		fmt.Println(reflect.TypeOf(json))
+		// fmt.Println(json)
+		// fmt.Println(reflect.TypeOf(json))
 	}
 	return json
 }

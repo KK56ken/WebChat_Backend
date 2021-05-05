@@ -3,6 +3,7 @@ package main
 import(
     "net/http"
     "webchat/controller"
+    "log"
 )
 
 func main() {
@@ -11,8 +12,14 @@ func main() {
     http.HandleFunc("/api/autoLogin", controller.AutoLogin)
     http.HandleFunc("/api/message", controller.Message)
     http.HandleFunc("/api/friend", controller.Friend)
+    http.HandleFunc("/ws", controller.Connection)
+    go controller.HandleMessages()
 
-    http.ListenAndServe(":9000", nil)
+    err := http.ListenAndServe(":9000", nil)
+
+    if err != nil{
+        log.Fatal("ListenAndServe: ", err)
+    }
 }
 
 

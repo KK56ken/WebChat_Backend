@@ -27,7 +27,7 @@ func Message(w http.ResponseWriter, r *http.Request) {
 
 		//データベースでidと一致している
 		ids := model.GetFriendsId(id)
-		fmt.Println(ids)
+		// fmt.Println(ids)
 
 		messages := model.GetMessages(id, ids)
 
@@ -63,7 +63,7 @@ func Message(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("JSON Unmarshal error:", err)
 				return
 		}
-		fmt.Println(message)
+		// fmt.Println(message)
 
 		model.PostMessage(message)
 
@@ -71,7 +71,7 @@ func Message(w http.ResponseWriter, r *http.Request) {
 		rname := model.GetFriendName(message.ReceiveUserId)
 
 		resultJson := `{"avater":"''` + `","sendUserName":"`+ sname + `","receiveUserName":"` + rname + `","message":"` + message.Message + `","time":"` + message.Time + `"}`
-		fmt.Println(message.SendUserId,message.ReceiveUserId,message.Message,message.Time)
+		// fmt.Println(message.SendUserId,message.ReceiveUserId,message.Message,message.Time)
 
 		w.WriteHeader(http.StatusOK)
 		r.Header.Set("Content-Type", "application/json")

@@ -3,9 +3,7 @@ package model
 import(
 	"database/sql"
 	"log"
-	"fmt"
-	// "strconv"
-	// "reflect"
+	// "fmt"
 	"strings"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -47,8 +45,8 @@ func GetMessages(userId int, ids []string)([]string){
 
 		json = append(json,`{"avater":"''` + `","sendUserName":"`+ sname + `","receiveUserName":"` + rname + `","message":"` + message.Message + `","time":"` + message.Time + `"}`)
 
-		fmt.Println(message.SendUserId,message.ReceiveUserId,message.Message,message.Time)
-		fmt.Println(json)
+		// fmt.Println(message.SendUserId,message.ReceiveUserId,message.Message,message.Time)
+		// fmt.Println(json)
 	}
 
 	return json
