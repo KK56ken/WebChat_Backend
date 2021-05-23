@@ -26,11 +26,11 @@
 *ib_logfile1
 *ibdata1
 
-*.cmake
-!/cmake/*.cmake
-*CMakeFiles/
-CMakeCache.txt
-Makefile
+# *.cmake
+# !/cmake/*.cmake
+# *CMakeFiles/
+# CMakeCache.txt
+# Makefile
 
 .cproject
 .deps

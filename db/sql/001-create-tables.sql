@@ -6,8 +6,9 @@ CREATE TABLE IF NOT EXISTS chatDB.users(
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `avatorurl` varchar(255)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `avatorurl` varchar(255),
+  `loginTime` timestamp NOT NULL
+)
 
 CREATE TABLE IF NOT EXISTS chatDB.messages(
   `messageid` int(11) NOT NULL AUTO_INCREMENT UNIQUE,
@@ -15,10 +16,10 @@ CREATE TABLE IF NOT EXISTS chatDB.messages(
   `receiveUserId` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
   `time` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
 
 CREATE TABLE IF NOT EXISTS chatDB.friends(
   `id` int(11) NOT NULL AUTO_INCREMENT UNIQUE,
   `sendFriendId` int(11) NOT NULL,
   `receiveFriendId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)

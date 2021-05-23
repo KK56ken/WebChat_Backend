@@ -39,10 +39,12 @@ func TokenCreate(user User)(string, error){
 
 	secret := "secret"
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email": user.Email,
-		"iss": "__init__",//JWTの発行者が入る（文字列（__init__）は任意）
-	})
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	// 	"email": user.Email,
+	// 	"iss": "__init__",//JWTの発行者が入る（文字列（__init__）は任意）
+	// })
 
 	// spew.Dump(token)
 

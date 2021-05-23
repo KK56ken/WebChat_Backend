@@ -9,7 +9,7 @@ import(
 )
 
 var clients = make(map[*websocket.Conn]bool)
-var broadcast = make(chan model.Message)
+var broadcast = make(chan string)
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -48,8 +48,12 @@ func Connection(w http.ResponseWriter, r *http.Request){
 				break
 		}
 		fmt.Println(msg)
+		fmt.Println(msg.SendUserId)
+		sname := model.GetFriendName(msg.SendUserId)
+		rname := model.GetFriendName(msg.ReceiveUserId)
+		resultJson := `{"avater":"''` + `","sendUserName":"`+ sname + `","receiveUserName":"` + rname + `","message":"` + msg.Message + `","time":"` + msg.Time + `"}`
 		// 新しく受信されたメッセージをブロードキャストチャネルに送る
-		broadcast <- msg
+		broadcast <- resultJson
 	}
 }
 func HandleMessages() {
